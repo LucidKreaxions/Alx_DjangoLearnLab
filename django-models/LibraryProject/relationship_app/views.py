@@ -20,9 +20,8 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("home") # Redirect to homepage
+            form.save()
+            return redirect('login') # Redirect to login after successful registration
     else:
         form = UserCreationForm()
 

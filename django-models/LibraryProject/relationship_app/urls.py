@@ -1,6 +1,7 @@
 from django.urls import path  # ✅ Import path
 from django.contrib.auth.views import LoginView, LogoutView 
 from .views import list_books, LibraryDetailView, register  # ✅ Import both views
+from . import views
 
 urlpatterns = [
     # Existing URLs

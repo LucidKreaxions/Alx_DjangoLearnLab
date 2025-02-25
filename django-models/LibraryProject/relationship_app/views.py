@@ -34,8 +34,8 @@ def user_login(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(redirect, user)
-            return redirect("home")
+            login(request, user)
+            return redirect("list_books")
     else:
         form = AuthenticationForm()
 

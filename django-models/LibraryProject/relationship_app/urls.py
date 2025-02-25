@@ -1,8 +1,15 @@
 from django.urls import path  # ✅ Import path
-from .views import list_books, LibraryDetailView  # ✅ Import both views
+from django.contrib.auth import views as auth_views # Import Django's auth views
+from .views import list_books, LibraryDetailView, register  # ✅ Import both views
 
 urlpatterns = [
+    # Existing URLs
     path('books/', list_books, name='list_books'),  # ✅ Function-based view
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),  # ✅ Class-based view
+
+    # Authentication URLs
+    path('login/', auth_views.LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name+'relationship_app/logout.html'), name='logout'),
+    path('register/', register, name='register'), # Custom Registration view
 ]
 

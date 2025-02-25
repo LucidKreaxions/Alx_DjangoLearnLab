@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 from .models import Book, Library
+from .utils import user_role_required
 
 # Function-Based View (FBV)- Lists all books.
 def list_books(request):
@@ -45,3 +46,15 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("login")
+
+@user_role_required('Admin')
+def admin_view(request):
+    return render(request, 'relationship_app/admin.html')
+
+@user_role_required('Librarian')
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian.html')
+
+@user_role_required('Member')
+def member_view(request):
+    return render(request, 'relationship_app/member.html')

@@ -2,8 +2,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
-from .models import Book, Library
-from .utils import user_role_required
+from .models import Book, Library, UserProfile
+from django.contrib.auth.decorators import user_passes_test
 
 # Function-Based View (FBV)- Lists all books.
 def list_books(request):
@@ -21,40 +21,35 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            UserProfile.objects.create(user=user, role='Member') # Create a UserProfile with default 'Member'
             return redirect('login') # Redirect to login after successful registration
     else:
         form = UserCreationForm()
 
     return render(request, "relationship_app/register.html", {"form": form})
 
+# Role Check Functions
+def is_admin(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-# User Login View
-def user_login(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect("list_books")
-    else:
-        form = AuthenticationForm()
+def is_librarian(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
-    return render(request, "relationship_app/login.html", {"form": form})
+def is_member(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
-# User Logout View
-def user_logout(request):
-    logout(request)
-    return redirect("login")
-
-@user_role_required('Admin')
+# Admin View - Only accessible to Admin users
+@user_passes_test(is_admin)
 def admin_view(request):
     return render(request, 'relationship_app/admin.html')
 
-@user_role_required('Librarian')
+# Librarian View - Only accessible to Librarian users
+@user_passes_test(is_librarian)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian.html')
 
-@user_role_required('Member')
+# Member View - Only accessible to Member users
+@user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member.html')

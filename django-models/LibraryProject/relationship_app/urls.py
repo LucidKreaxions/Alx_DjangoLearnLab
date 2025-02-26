@@ -14,9 +14,12 @@ urlpatterns = [
 
 
     # Role-Based Access URLs
+    path('admin_view/', views.admin_view, name='admin_view'),
     path('admin-dashboard/', views.admin_view, name='admin_dashboard'),
-    path('librarian-dashboard/', views.librarian_view, name='librarian_dashboard'),
-    path('member-dashboard/', views.member_view, name='member_dashboard'),
+    path('admin/', views.admin_view, name='admin_page'),
+
+    path('librarian_view/', views.librarian_view, name='librarian_view'),
+    path('member_view/', views.member_view, name='member_view'),
 
 
 

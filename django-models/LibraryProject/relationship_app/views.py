@@ -3,7 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 from .models import Book, Library, UserProfile
-from django.contrib.auth.decorators import user_passes_test, permission_required
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from .forms import BookForm # adding/editing book
 
 # Function-Based View (FBV)- Lists all books.

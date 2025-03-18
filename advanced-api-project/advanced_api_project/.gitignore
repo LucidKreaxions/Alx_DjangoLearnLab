@@ -1,0 +1,26 @@
+# Byte-compiled / binary files
+*.pyc
+*.pyo
+__pycache__/
+*.sqlite3
+
+# Virtual Environment
+venv/
+env/
+
+# Django secret settings (if applicable)
+*.env
+.env
+
+# Migrations (optional, but generally included)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Media and Static files (optional)
+media/
+staticfiles/
+
+# IDE and Editor Config Files
+.vscode/
+.idea/
+*.swp

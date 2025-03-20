@@ -4,7 +4,7 @@ from .serializers import BookSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-class BookList(generics.ListAPIView):
+class BookListView(generics.ListAPIView):  # Change from ListCreateAPIView to ListAPIView
     """List all Books"""
     queryset = Book.objects.all()
     serializer_class = BookSerializer
@@ -12,7 +12,8 @@ class BookList(generics.ListAPIView):
 
 
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """ Retrive, Update, Delete a single book"""
+    """Retrieve, Update, Delete a single book"""
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]  # Read for all, edit/delete for authenticated users
+

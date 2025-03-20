@@ -4,7 +4,7 @@ from .serializers import BookSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-class BookListCreateView(generics.ListCreateAPIView):
+class BookListCreateView(generics.ListAPIView):
     """List & Create Books"""
     queryset = Book.objects.all()
     serializer_class = BookSerializer
